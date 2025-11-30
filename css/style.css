@@ -1,6 +1,108 @@
-.icon_3D{
+:root{
+    --highlighted-color: #faffdd;
+    --text-color: #c8c8c8;
+    --background-color: #333;
+
+    --sidebar-text-color : #d1d1d1;
+    --sidebar-background-color: #1a1a1a;
+    --sidebar-hover-color: #919283;
+}
+body {
+    background-color: var(--background-color);
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.main-icon{
+    position: fixed;
+    top: 16px;
+    left: 16px;
     width: 64px;
     height: 64px;
     object-fit: contain;
+    display: flex;
+}
+.main-icon-wrapper{
+    background-color: var(--background-color);
+    border: 3px solid var(--sidebar-text-color);
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    width: 64px;
+    height: 64px;
+    border-radius: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon{
+    display: flex;
+}
+.text{
+    padding: 0 10px;
+    font-weight: bold;
+}
+.sidebar {
+    background-color: var(--sidebar-background-color);
+    -webkit-user-drag: none;
+    user-select: none;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 180px;
+    top: 0;
+    padding: 10px 0;
+    transition: width 0.3s;
+}
+.sidebar a {
+    color: var(--sidebar-text-color);
+    padding: 16px 26px;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    white-space: nowrap;
+}
+.sidebar a:hover {
+    background-color: var(--sidebar-hover-color);
+}
+.sidebar.collapsed { 
+    width: 64px;
+}
+.sidebar.collapsed a .text {
+    display: none;
+}
+.sidebar.collapsed .main-icon{
+    display: none;
+}
+.sidebar.collapsed .main-icon-wrapper{
+    display: none;
+}
+.sidebar.collapsed ~ .content {
+    margin-left: 64px;
+}
+.content {
+    margin-left: 180px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+#toggle-btn {
+    color: var(--sidebar-text-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-self: flex-end;
+    font-size: 40px;
+    margin: 8px;
+    margin-bottom: 20px;
     display: block;
+    transition: left 0.3s;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--highlighted-color);
+    -webkit-user-drag: none;
+    user-select: none;
+}
+p{
+    color: var(--text-color);
 }
