@@ -105,7 +105,10 @@ body {
     display: block;
     transition: left 0.3s;
 }
-
+.right{
+    text-align: right;
+    margin-right: 0px;
+}
 h1, h2, h3, h4, h5, h6 {
     color: var(--highlighted-color);
     -webkit-user-drag: none;
