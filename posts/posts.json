@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Welcome to 64mik's tech blog",
+    "date": "2025-12-01",
+    "link": "posts/post_0.md"
+
+  },
+  {
+    "title": "C++에 관하여",
+    "date": "2025-12-01",
+    "link": "posts/post_1.md"
+  },
+  {
+    "title": "진행중인 프로젝트",
+    "date": "2025-12-01",
+    "link": "posts/post_2.md"
+  }
+]

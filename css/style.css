@@ -22,8 +22,8 @@ body {
     display: flex;
 }
 .main-icon-wrapper{
-    background-color: var(--background-color);
-    border: 3px solid var(--sidebar-text-color);
+    background-color: var(--highlighted-color);
+    border: 3px solid var(--sidebar-hover-color);
     position: fixed;
     top: 14px;
     left: 14px;
@@ -37,7 +37,7 @@ body {
 .icon{
     display: flex;
 }
-.text{
+.item{
     padding: 0 10px;
     font-weight: bold;
 }
@@ -68,22 +68,30 @@ body {
 .sidebar.collapsed { 
     width: 64px;
 }
-.sidebar.collapsed a .text {
+.sidebar.collapsed a .item{
     display: none;
 }
-.sidebar.collapsed .main-icon{
+.sidebar.collapsed.main-icon{
     display: none;
 }
 .sidebar.collapsed .main-icon-wrapper{
     display: none;
 }
-.sidebar.collapsed ~ .content {
+.sidebar.collapsed + .content {
     margin-left: 64px;
 }
-.content {
+.sidebar + .content {
     margin-left: 180px;
     padding: 20px;
     transition: margin-left 0.3s;
+}
+.content a{
+    color: var(--highlighted-color);
+    font-size: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 #toggle-btn {
     color: var(--sidebar-text-color);

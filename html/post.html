@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>64mik's tech blog</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <div id="sidebar" class="sidebar collapsed">
+        <button id="toggle-btn">☰</button>    
+        <a href="index.html"><span class="icon">H</span><span class="item">Home</span></a>
+        <a href="index.html"><span class="icon">A</span><span class="item">About</span></a>
+        <a href="index.html"><span class="icon">C</span><span class="item">Contact</span></a>
+        <a href="index.html"><span class="icon">P</span><span class="item">Post</span></a>
+        <a href="index.html"><span class="icon">O</span><span class="item">Other</span></a>
+        <div class="main-icon-wrapper">
+            <img src="images/3Dicon.png" alt="64mik Icon" class="main-icon">
+        </div>
+    </div>
+
+    <div id="content" class="content">
+    </div>
+
+    <script>
+    fetch('posts/posts.json')
+    .then(response => response.json())
+    .then(posts => {
+        const container = document.getElementById('content');
+        posts.forEach(post => {
+        const title = document.createElement('h2'); //제목
+        title.textContent = post.title;
+        const date = document.createElement('p'); //날짜
+        date.textContent = `Published on: ${post.date}`;
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'content';
+        const link = document.createElement('a');
+        link.href = post.link;
+        link.textContent = post.title;
+        contentDiv.appendChild(link);
+        container.appendChild(contentDiv);
+        container.appendChild(date);
+        
+
+      });
+    })
+    .catch(err => console.error(err));
+    </script>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
