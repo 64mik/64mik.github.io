@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="js/init.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>64mik's tech blog</title>
@@ -10,15 +11,16 @@
 </head>
 <body>
     <div id="sidebar" class="sidebar collapsed">
-        <button id="toggle-btn">☰</button>    
-        <a href="index.html"><span class="icon">H</span><span class="item">Home</span></a>
-        <a href="about.html"><span class="icon">A</span><span class="item">About</span></a>
-        <a href="post.html"><span class="icon">P</span><span class="item">Post</span></a>
-        <a href="projects.html"><span class="icon">P</span><span class="item">Projects</span></a>
-        <a href="index.html"><span class="icon">O</span><span class="item">Other</span></a>
         <div class="main-icon-wrapper">
             <img src="images/3Dicon.png" alt="64mik Icon" class="main-icon">
         </div>
+        <button id="toggle-btn">☰</button>    
+        <button id="theme-btn">O</button>
+        <a href="index.html"><span class="icon">H</span><span class="sidebar-text">Home</span></a>
+        <a href="about.html"><span class="icon">A</span><span class="sidebar-text">About</span></a>
+        <a href="post.html"><span class="icon">P</span><span class="sidebar-text">Post</span></a>
+        <a href="projects.html"><span class="icon">P</span><span class="sidebar-text">Projects</span></a>
+        <a href="index.html"><span class="icon">O</span><span class="sidebar-text">Other</span></a>
     </div>
 
     <div id="content" class="content">
@@ -49,6 +51,7 @@
     .catch(err => console.error(err));
     </script>
     
+    <script src="js/theme.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
