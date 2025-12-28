@@ -1,12 +1,10 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <script src="/assets/js/init.js"></script>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>64mik's Tech Blog</title>
+    <title>{{title}}</title>
 
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
@@ -24,30 +22,12 @@
         <a href="/post.html"><span class="icon">P</span><span class="sidebar-text">Post</span></a>
         <a href="/projects.html"><span class="icon">P</span><span class="sidebar-text">Projects</span></a>
         <a href="/index.html"><span class="icon">O</span><span class="sidebar-text">Other</span></a>
-        
     </div>
     <div id="content" class="content">
-        <h1>Welcome to 64mik's Tech Blog!</h1>
-        <p>프로그래밍 기술 블로그입니다.</p>
         <div class="box">
-            <h3 class="title">최신 포스트</h3>
+            <h3 class="title">{{post_title}}</h3>
             <hr>
-            <a href="/index.html" class="link">link1</a><span class="text"> - date</span>
-            <p class="text">최신 글에 대한 설명 </p>
-            <a href="/index.html" class="link">link2</a>
-            <p class="text">lore</p>
-        </div>
-        <div class="box">
-            <h3 class="title">프로젝트</h3>
-            <hr>
-            <a href="index.html"><span class="link">Data Storage</span></a>
-            <p class="text">- 데이터 관리 프로그램</p>
-        </div>
-        <div class="box">
-            <h3 class="title">소개</h3>
-            <hr>
-            <p class="text">개인적으로 작업했던 것을 올리고 정보나 팁을 공유하는 개인 블로그입니다.</p>
-            <a href="about.html" class="link">더 알아보기</a>
+            {{content}}
         </div>
     </div>
     <script src="/assets/js/theme.js"></script>
