@@ -1,6 +1,9 @@
 <config>
 # blog
 
+title=64mik's tech blog
+post_title
+
 BLOG_NAME=64mik's tech blog
 BLOG_VERSION=v0.0.1
 BLOG_AUTHOR=64mik
