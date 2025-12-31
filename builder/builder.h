@@ -5,50 +5,41 @@
 #include <string>
 #include <conio.h>
 #include <windows.h>
+#include <map>
+#include <unordered_map>
 #include <filesystem>
 #include <vector>
+#include <cstdint>
 class Builder {
     public:
-        enum class HtmlTag {
-            SECTION,
-            ARTICLE,
-            DATE,
-            
-            BOX,
-            LINK,
-            TEXT,
-            TITLE,
-            IMG,
-            UL,
-            LI,
-            NONE,
-            
-        };
-        Builder();
+         Builder();
         ~Builder();
-        void replace(std::string& s, const std::string& key, const std::string& value);
-        std::string mdToHtml(const std::filesystem::path& mdPath);
+        
+        void loadCacheFile(const std::string& cacheFilePath, std::unordered_map<std::string, uint64_t>& map);
+        void saveCacheFile(const std::string& cacheFilePath, std::unordered_map<std::string, uint64_t>& map);
+        bool isChanged(const std::string& path, const std::unordered_map<std::string, uint64_t>& map);
+        std::string makePost(const std::string& mdPath, const std::string& templatePath);
         std::string loadFile(const std::string& path);
-
+        uint64_t hashing(const std::string& path);
+        
     private:
-        void appendHtml(std::string& content, const std::string& line, size_t depth=0);
-        void pushTag(HtmlTag& tag);
-        bool popTag(HtmlTag& tag);
-        std::string getIndent(size_t depth);
-        std::string trim(const std::string& s);
-
-        std::string elementToHtml(HtmlTag tag, bool isClosing= false);
-        HtmlTag parseTag(const std::string& str);
-        HtmlTag suitableTag(HtmlTag tag);
+        std::unordered_map<std::string, std::string> configMap;    
+        std::unordered_map<std::string, std::string> templateMap;    
+        std::vector<std::string> tagStack;
         
         int defaultIndent = 3;
-        bool inFrontMatter = false;
-        bool frontMatterDone = false;
-        std::string startMarker = "<=";
-        std::string endMarker = "=>";
-        std::string dataMarker = "::";
-        std::string title;
-        std::string date;
-        std::vector<HtmlTag> tagStack;
+
+        void applyConfig(std::string& content);
+        void resetConfig(std::unordered_map<std::string, std::string>& map, const std::string& configFileName = "config.conf");
+        void appendHtml(std::string& content, const std::string& line, size_t depth=0);
+        void pushTag(std::string& tag);
+        bool popTag(std::string& tag);
+        void replace(std::string& s, const std::string& key, const std::string& value);
+        std::string elementToHtml(std::string str, bool isClosing= false);
+        std::string getConfig(const std::string& key);
+        std::string getIndent(size_t depth);
+        std::string mdToHtml(const std::filesystem::path& mdPath);
+        std::string trim(const std::string& s);
+        
 };
 #endif // BUILDER_H

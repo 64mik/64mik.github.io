@@ -4,7 +4,7 @@
     <script src="/assets/js/init.js"></script>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>{{blog_name}}</title>
 
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
@@ -13,7 +13,7 @@
 <body>
     <div id="sidebar" class="sidebar collapsed">
         <div id="main-icon-wrapper">
-            <img src="/assets/images/3Dicon.png" alt="64mik Icon" id="main-icon"><span class="icon">v0.0.1</span>
+            <img src="/assets/images/3Dicon.png" alt="64mik Icon" id="main-icon"><span class="icon">{{blog_version}}</span>
         </div>
         <button id="toggle-btn">☰</button>    
         <button id="theme-btn">O</button>
@@ -25,9 +25,9 @@
     </div>
     <div id="content" class="content">
         <div class="box">
-            <h3 class="title">{{post_title}}</h3>
+            <h3 class="title">{{post_title}}<span>- {{post_date}}</span></h3>
             <hr>
-{{content}}
+{{post_content}}
         </div>
     </div>
     <script src="/assets/js/theme.js"></script>
