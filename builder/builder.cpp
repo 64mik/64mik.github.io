@@ -1,10 +1,11 @@
 #include "builder.h"
 
 //done
-/*pubilc*/
-Builder::Builder() {
-    resetConfig(configMap, "config.conf");
-    resetConfig(templateMap, "templates.conf");
+/*public*/
+Builder::Builder() : Builder("config.txt"){}
+Builder::Builder(const std::string& configPath){
+    resetConfig(configMap, configPath);
+    resetConfig(templateMap, getConfig("templates_file"));  // 없을 때 기본 설정 필요
 }
 Builder::~Builder() {}
 
@@ -38,11 +39,27 @@ bool Builder::isChanged(const std::string& path, const std::unordered_map<std::s
     }
     return changed;
 }
-std::string Builder::makePost(const std::string& mdPath, const std::string& templatePath){
+std::string Builder::makePost(std::ofstream& metaFile, const std::string& mdPath, const std::string& templatePath){ //목적 = 그냥 간편하게 만드는 용도
     std::string base = loadFile(templatePath);
-    configMap["post_content"] = mdToHtml(mdPath);
+    std::string metaStr=configMap["del_start"]+"post_path:"+mdPath;
+    auto fr = parseFrontMarker(mdPath);
+    std::string line;
+    std::istringstream iss(fr.first);
+    while(std::getline(iss, line)){
+        auto meta = parser(line, getConfig("meta_marker"));
+        if(meta.first != ""){
+            replace(base, configMap["del_start"]+meta.first+configMap["del_end"], meta.second);
+            if(metaFile.is_open()){
+                metaStr += ","+meta.first +getConfig("meta_marker")+ meta.second;
+            }
+        }
+    }
+
+    replace(base, configMap["del_start"]+"post_content"+configMap["del_end"], mdToHtml(fr.second));
     applyConfig(base);
-    resetConfig(configMap, "config.conf");
+    if(metaFile.is_open()){
+        metaFile<< metaStr << configMap["del_end"] <<"\n";
+    }
     return base;
 }
 std::string Builder::loadFile(const std::string& path) {
@@ -79,11 +96,10 @@ void Builder::resetConfig(std::unordered_map<std::string, std::string>& map, con
     std::ifstream infile(configFileName);
 
     if(!infile.is_open()){
-        std::cerr << "error: failed open file -> " << configFileName;
+        //std::cerr << "error: failed open file -> " << configFileName;
         return;
     }
     while(std::getline(infile, line)){
-        std::cout << line << '\n';
         if(line.empty() || line[0] == '#') continue;
         size_t pos = line.find("=");
         if(pos != std::string::npos){
@@ -114,7 +130,7 @@ void Builder::replace(std::string& s, const std::string& key, const std::string&
     while ((pos = s.find(key)) != std::string::npos)
         s.replace(pos, key.length(), value);
 }
-std::string Builder::elementToHtml(std::string str, bool isClosing) {
+std::string Builder::elementToHtml(std::string& str, bool isClosing) {
     auto it = templateMap.find(str);
     if (it != templateMap.end()) {    //존재하면
         std::string s = it->second;
@@ -128,63 +144,39 @@ std::string Builder::elementToHtml(std::string str, bool isClosing) {
             }
         }
         else{   //npos
-            std::cerr<<"error: there is no |";
+            //std::cerr<<"error: there is no |";
             return "";
         }
     }
     else{
         if(str != "none")
-        std::cerr << "error: Unknown tag -> " << str << '\n';
+        //std::cerr << "error: Unknown tag -> " << str << '\n';
         return "";
     }
+    return "";
 }
 std::string Builder::getConfig(const std::string& key) {
     auto it = configMap.find(key);
     if (it != configMap.end()) {
         return it->second;
     }
-    std::cout << "error: unknown key";
+    //std::cout << "error: unknown key";
     return "";
 }
 std::string Builder::getIndent(size_t depth) {
     return std::string((depth + defaultIndent) * 4, ' ');
 }
-std::string Builder::mdToHtml(const std::filesystem::path& mdPath) {
-    bool inFrontMatter = false;
-    bool frontMatterDone = false;
-    std::string content = "";
+std::string Builder::mdToHtml(const std::string& str) {
+    std::istringstream iss(str);
+    std::string content="";
     std::string staging="";
     std::string line;
     std::string element;
-    std::ifstream inFile(mdPath);
 
-    while (std::getline(inFile, line)) {
-        if (line == "---") {
-            if (!inFrontMatter && !frontMatterDone) {
-                inFrontMatter = true;
-                continue;
-            }
-            if (inFrontMatter) {
-                inFrontMatter = false;
-                frontMatterDone = true;
-                continue;
-            }
-        }
-        if (inFrontMatter) {
-            auto pos = line.find(':');
-            if (pos != std::string::npos) {
-                std::string key = line.substr(0, pos);
-                std::string value = line.substr(pos + 1);
-                value.erase(0, value.find_first_not_of(" "));
-                configMap[key] = value;
-            }
-            continue;
-        }
-        
+    while (std::getline(iss, line)) {
         line.erase(0, line.find_first_not_of(" \t"));
         if (line.empty()) continue;
         
-       
         if(staging != ""){ //stagging 비우기  
             size_t depth = tagStack.empty() ? 0 : tagStack.size() - 1;
             if (line.size() > 2 && line.rfind(getConfig("data_marker") + " ", 0) == 0) { //데이터 라인인지 확인
@@ -209,7 +201,7 @@ std::string Builder::mdToHtml(const std::filesystem::path& mdPath) {
                 continue;
             }
             else { //존재하지 않는 태그라면 경고 출력 및 p로 처리
-                std::cout <<"Unknown tag: "<< line.substr(2) << std::endl;
+                //std::cout <<"Unknown tag: "<< line.substr(2) << std::endl;
             }
         }
         else if (trim(line) == getConfig("end_marker")) {
@@ -247,3 +239,57 @@ std::string Builder::trim(const std::string& s) {
 
 
 //yet
+std::pair<std::string, std::string> Builder::parser(const std::string& line, std::string del){
+    trim(line);
+    auto pos = line.find(del);
+    if (pos != std::string::npos) {
+        std::string key = line.substr(0, pos);
+        std::string value = line.substr(pos + 1);
+        return { key, value };
+    }
+    return {"",""};
+}
+
+std::pair<std::string, std::string> Builder::parseFrontMarker(const std::string& path){
+    std::ifstream infile(path);
+    if(!infile.is_open()){
+        //std::cerr<<"error: file isn't open";
+        return {"", ""};
+    }
+    std::string line;
+    std::string front="";
+    std::string rear="";
+    
+    bool inFrontMatter = false;
+    bool frontMatterDone = false;
+    
+    while(std::getline(infile, line)){
+        if (line == "---" && !frontMatterDone) {    //분기 입장
+            if (!inFrontMatter) {//첫 입장시
+                inFrontMatter = true;
+                continue;
+            }
+            if (inFrontMatter) {//종료
+                inFrontMatter = false;
+                frontMatterDone = true;
+                continue;
+            }
+        }
+        if (inFrontMatter) {
+            front += line + '\n';
+            continue;
+        }
+        rear += line + '\n';
+    }
+    return {front, rear};
+}
+
+
+void sortMetaVector(std::ifstream& infile, std::vector<Builder::PostInfo>& posts){
+    std::string line;
+    while(std::getline(infile, line)){
+        Builder::PostInfo post;
+        post.isPost=true;
+        posts.push_back(post);//포스트 객체 만들고 값 넣어서 백터에 푸시, post인지 아닌지 확인 하는 코드 필요
+    }
+}

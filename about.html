@@ -1,50 +1,57 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <script src="js/init.js"></script>
+    <script src="/assets/js/init.js"></script>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
+    <title>About 64mik's Tech Blog</title>
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+
 </head>
 <body>
     <div id="sidebar" class="sidebar collapsed">
-        <div class="main-icon-wrapper">
-            <img src="images/3Dicon.png" alt="64mik Icon" class="main-icon">
+        <div id="main-icon-wrapper">
+            <img src="/assets/images/64mik_Icon2.png" alt="64mik Icon" id="main-icon"><span class="icon"><h6>v0.1.1</h6></span>
         </div>
         <button id="toggle-btn">☰</button>    
         <button id="theme-btn">O</button>
-        <a href="index.html"><span class="icon">H</span><span class="sidebar-text">Home</span></a>
-        <a href="about.html"><span class="icon">A</span><span class="sidebar-text">About</span></a>
-        <a href="post.html"><span class="icon">P</span><span class="sidebar-text">Post</span></a>
-        <a href="projects.html"><span class="icon">P</span><span class="sidebar-text">Projects</span></a>
-        <a href="index.html"><span class="icon">O</span><span class="sidebar-text">Other</span></a>
+        <a href="/index.html"><span class="icon">H</span><span class="sidebar-text">Home</span></a>
+        <a href="/about.html"><span class="icon">A</span><span class="sidebar-text">About</span></a>
+        <a href="/post.html"><span class="icon">P</span><span class="sidebar-text">Post</span></a>
+        <a href="/projects.html"><span class="icon">P</span><span class="sidebar-text">Projects</span></a>
+        <a href="/index.html"><span class="icon">O</span><span class="sidebar-text">Other</span></a>
     </div>
-    
-    <div class="content">
-        <section id="about-the-blog">
-            <h1>About 64mik's Tech Blog</h1>
-            <p>개인적으로 작업했던 것을 올리고 정보나 팁을 공유하는 개인 블로그입니다.</p>
-        </section>
+    <div id="content" class="content">
+        <h2 class="title">
+            About 64mik's Tech Blog 
+        </h2>
+        <p>개인적으로 작업했던 것을 올리고 정보나 팁을 공유하는 개인 블로그입니다.</p>
+        <div class="box">
+            <h2 class="title">
+                About athor 
+            </h2>
+            <p>C++을 주로 사용해 게임 및 프로그램을 만드는 백앤드 개발자 입니다.</p>
+            <p>계속 배우는 중입니다.</p>
+        </div>
+        <div class="box">
+            <h2 class="title">
+                Contact 
+            </h2>
+            <p>질문이나 제안, 협업 등은 아래를 이메일을 통해 연락해주세요</p>
+            <div class="box">
+                <ul>
+                    <li>Email: 64mik.dev@gmail.com</li>
+                    <li>Youtube: @64mik</li>
+                </ul>
+            </div>
+        </div>
 
-        <section id="about-me">
-            <h2>About Me</h2>
-            <p>백엔드 개발자로, 주로 C++로 게임과 프로그램을 만듭니다. 學無止境, 배움에는 끝이 없어 계속해서 배우는 중입니다.</p>
-        </section>
-
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>If you have any questions, suggestions, or would like to collaborate, feel free to reach out!</p>
-            <ul>
-                <li>Email: <a href="mailto:64mik.dev@gmail.com">64mik.dev@gmail.com</a></li>
-                <li>Youtube: <a href="https://www.youtube.com/">My Channel</a></li>
-            </ul>
-        </section>
     </div>
-
-    <script src="js/theme.js"></script>
-    <script src="js/main.js"></script>
+    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>

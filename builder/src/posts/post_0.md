@@ -1,13 +1,14 @@
 ---
-title: 블로그 테스트 글
-date: 2025-12-29
+post_title:블로그 테스트
+post_date:2025-01-04
+post_lore:여러 테스트를 시도하는 중
 ---
 
 현재 어느정도 기능이 정상 작동 중.
 <= box
     아마도 이렇게 코드를 작성하고
     <= link
-        :: index.html
+        :: /index.html
         링크?
     =>
 =>
