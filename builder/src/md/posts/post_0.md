@@ -1,7 +1,10 @@
 ---
-post_title:블로그 테스트
-post_date:2025-01-04
-post_lore:여러 테스트를 시도하는 중
+title:블로그 테스트
+date:2025-01-04
+lore:여러 테스트를 시도하는 중
+tags:none
+category:test
+isPost:true
 ---
 
 현재 어느정도 기능이 정상 작동 중.

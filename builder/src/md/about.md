@@ -1,5 +1,10 @@
 ---
-blog_title:About 64mik's Tech Blog
+title:About 64mik's Tech Blog
+date:untracked
+lore:none
+tags:none
+category:main
+isPost:false
 ---
 <= title
     About 64mik's Tech Blog

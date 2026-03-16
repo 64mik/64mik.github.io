@@ -1,4 +1,5 @@
 /.vscode
-/builder/temp/*
+/builder/staging/*
+/builder/lib/temp/*
 *.exe
 *.txt

@@ -1,63 +1,116 @@
-#include "builder.h"
+#include "./include/builder.h"
+#include "./lib/h/caching.h"
+#include "./lib/h/fileHandler.h"
+#include "./lib/h/metaData.h"
 #include <iostream>
+#include <functional>
+struct folderPath {
+    std::string source_dir;
+    std::string page_dir;
+    std::string post_dir;
+};
+const folderPath mdPaths = {".\\src\\md", ".\\staging", ".\\staging\\posts"};
+const folderPath stagingPaths = {".\\staging", "..\\pages" ,"..\\pages\\posts"};
 
-void startMsg(){
-    std::cout<<"\n-----------\n1. md to html.\n2. publish posts.\n3. exit.\n>> ";
+void processing(const folderPath& folder,const std::string& extension, Caching& cache, metaData& md, std::function<std::pair<metaData::pageData, std::string>(const std::filesystem::path&)> contentFunc) {
+    uint64_t hash;
+    for (const auto& entry : std::filesystem::recursive_directory_iterator(folder.source_dir)) {
+        std::string path = entry.path().string();
+        std::filesystem::path filename = entry.path().stem();
+        if (entry.path().extension() == extension && cache.isFileChanged(path, hash=cache.hashing(path))){ 
+            std::cout << "Processing: " + path + "\n";
+            auto [pd, content] = contentFunc(path);
+            pd.fileName = filename.string();
+            pd.path = path;
+            md.pushMeta(pd);
+            auto outPath = std::filesystem::path(folder.page_dir) / filename.replace_extension(".html");
+            if(pd.meta.find("isPost") != pd.meta.end() && pd.meta.at("isPost") == "true")
+                outPath = std::filesystem::path(folder.post_dir) / filename.replace_extension(".html");
+            if(pd.meta.find("category") != pd.meta.end() && pd.meta.at("category") == "index")
+                if(extension == ".html")
+                    outPath = std::filesystem::path("..\\index.html");
+            std::cout << "Output Path: " + outPath.string() + "\n";
+            std::ofstream outFile(outPath, std::ios::trunc);
+            if(!outFile.is_open()){
+                std::cerr << "Error: Could not open file for writing: " + outPath.string() + "\n";
+                continue;
+            }
+            outFile << content;
+            outFile.close();
+            cache.put(path, hash);
+        }
+    }
+    cache.saveCacheFile();
 }
 
-int main() {
-    std::string folders[] = {"./src", "./temp", "../posts"};
-    for(std::string s : folders){
-        std::filesystem::create_directories(s);
-    }
-    Builder b("config.conf");
-    std::string selection;
-    std::unordered_map<std::string, uint64_t> cacheMap;
-    std::unordered_map<std::string, std::string> metaMap;
-    b.loadCacheFile(b.getConfig("build_cache_file"), cacheMap);
-    std::ofstream metaFile(b.getConfig("meta_info_file"));
-    while(true) {
-        startMsg();
-        std::getline(std::cin, selection);
-        if(selection == "md to html" || selection == "1") {
-            for (const auto& entry : std::filesystem::recursive_directory_iterator("./src")) {
-                std::string path = entry.path().string();
-                if (entry.path().extension() == ".md" && (b.isChanged(path, cacheMap) || !std::filesystem::exists("./temp/" + entry.path().stem().string() + ".html"))) {
-                    std::cout << "Processing: " + entry.path().string() + "\n";
-                    cacheMap[path] = b.hashing(path);
-                    std::ofstream outFile("./temp/" + entry.path().stem().string() + ".html");
-                    outFile << b.makePost(metaFile ,entry.path().string(), b.getConfig("base_path"));
-                    outFile.close();
-                }
-            }
-            b.saveCacheFile(b.getConfig("build_cache_file"), cacheMap);
-            std::cout << "Finished processing markdown files.\n";
-        }
-        else if(selection == "publish posts" || selection == "2"){
-            for (const auto& entry : std::filesystem::directory_iterator("./temp/")) {
-                std::string path = entry.path().string();
-                if (entry.path().extension() == ".html" && b.isChanged(path, cacheMap)) {
-                    std::cout << "Publishing: "+ entry.path().stem().string() + ".html" + "\n";
-                    std::string postContent = b.loadFile(entry.path().string());
-                    std::string outPath = "../" + entry.path().stem().string() + ".html";
-                    if (entry.path().stem().string().find("post_") != std::string::npos)
-                        outPath = "../posts/" + entry.path().stem().string() + ".html";
-                    std::ofstream outFile(outPath);
-                    outFile << postContent;
-                    outFile.close();
-                    cacheMap[path] = b.hashing(path);;
-                }
-            }
-            b.saveCacheFile(b.getConfig("buildCacheFile"), cacheMap);
-            std::cout << "Finished publishing posts.\n";
-        }
-        else if(selection == "exit" || selection == "3"){
-            return 0;
-        }
-        else {
-            std::cout<< "Unknown command: " + selection + "\n";
-        }
-    }
 
+int main() {
+    Caching cache;
+    Builder b;
+    FileHandler f;
+    metaData md;
+    metaData::pageData pd;
+
+    std::string content;
+    std::string input;
+    std::string options[4] = {"1. md to html", "2. publish posts", "3. clear cache", "4. exit"};
+    int selection;
+    while(true){
+        std::cout << "Select an option:\n";
+        for(auto n : options){
+            std::cout << "- " + n + "\n";
+        }
+        if(!std::getline(std::cin, input)){
+            std::cout << "Error reading input. Please try again.\n";
+            continue;
+        }
+        try{
+            selection = std::stoi(input);
+        } 
+        catch(const std::exception& e){
+            std::cout << "Invalid input. Please enter a number.\n";
+            continue;
+        }          
+        switch (selection){
+            case 1:{
+                std::string base=f.loadFile(b.getConfig("base_path"));
+                processing(mdPaths, ".md", cache, md, [&](const std::filesystem::path& path){
+                    auto fr= b.makePost(path.string(), base);
+                    pd.meta.clear();
+                    b.replace(fr.second, b.getConfig("del_start")+"version"+b.getConfig("del_end"), pd.version);
+                    std::istringstream iss(fr.first);//프론트메타 파싱
+                    for(std::string line; std::getline(iss, line); ) {
+                        auto fr = b.parser(line, b.getConfig("meta_marker"));
+                        if(fr.first != ""){
+                            pd.meta[fr.first] = fr.second;
+                        }
+                    }
+                    for(auto it : pd.meta){
+                        b.replace(fr.second, b.getConfig("del_start")+it.first+b.getConfig("del_end"), it.second);
+                    }
+                    return std::make_pair(pd, fr.second);
+                });
+                std::cout << "Finished processing markdown files.\n";
+                break;
+            }
+            case 2:{
+                processing(stagingPaths, ".html", cache, md, [&](const std::filesystem::path& path){
+                    std::string content = f.loadFile(path.string());
+                    return std::make_pair(md.getMeta(path.stem().string()), content);
+                });
+                std::cout << "Finished publishing posts.\n";
+                break;
+            }
+            case 3:
+                cache.clearCache();
+                std::cout << "Cache cleared.\n";
+                break;
+            case 4:
+                return 0;
+            default:
+                std::cout << "\nUnknown command: " + input + "\n";
+                continue;
+        }
+  }
     return 0;
 }

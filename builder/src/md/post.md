@@ -1,5 +1,10 @@
 ---
-blog_title:Post
+title:Post
+date:untracked
+lore:none
+tags:none
+category:main
+isPost:false
 ---
 <= box
     <= title
@@ -14,12 +19,12 @@ blog_title:Post
     =>
     <= list 
         <= link
-            :: /posts/post_0.html
+            :: /pages/posts/post_0.html
             예시1
         =>
         -
         <= link
-            :: /posts/post_1.html
+            :: /pages/posts/post_1.html
             예시2
         =>
     =>

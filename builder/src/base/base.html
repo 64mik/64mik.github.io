@@ -4,29 +4,33 @@
     <script src="/assets/js/init.js"></script>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{blog_title}}</title>
+    <title>{{title}}</title>
 
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
 
 </head>
 <body>
     <div id="sidebar" class="sidebar collapsed">
         <div id="main-icon-wrapper">
-            <img src="/assets/images/64mik_Icon2.png" alt="64mik Icon" id="main-icon"><span class="icon">{{blog_version}}</span>
+            <img src="/assets/images/64mik_Icon.png" alt="64mik Icon" id="main-icon"><span class="icon">{{version}}</span>
         </div>
         <button id="toggle-btn">☰</button>    
         <button id="theme-btn">O</button>
         <a href="/index.html"><span class="icon">H</span><span class="sidebar-text">Home</span></a>
-        <a href="/about.html"><span class="icon">A</span><span class="sidebar-text">About</span></a>
-        <a href="/post.html"><span class="icon">P</span><span class="sidebar-text">Post</span></a>
-        <a href="/projects.html"><span class="icon">P</span><span class="sidebar-text">Projects</span></a>
+        <a href="/pages/about.html"><span class="icon">A</span><span class="sidebar-text">About</span></a>
+        <a href="/pages/post.html"><span class="icon">P</span><span class="sidebar-text">Post</span></a>
+        <a href="/pages/projects.html"><span class="icon">P</span><span class="sidebar-text">Projects</span></a>
         <a href="/index.html"><span class="icon">O</span><span class="sidebar-text">Other</span></a>
     </div>
     <div id="content" class="content">
-{{post_content}}
+        <p><strong>Date:</strong> {{date}}</p>
+        <p><strong>Lore:</strong> {{lore}}</p>
+        <p><strong>Tags:</strong> {{tags}}</p>
+        <p><strong>Category:</strong> {{category}}</p>
+{{content}}
     </div>
     <script src="/assets/js/theme.js"></script>
     <script src="/assets/js/main.js"></script>

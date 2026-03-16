@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="/assets/js/init.js"></script>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.1.0 업데이트</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+
+</head>
+<body>
+    <div id="sidebar" class="sidebar collapsed">
+        <div id="main-icon-wrapper">
+            <img src="/assets/images/64mik_Icon.png" alt="64mik Icon" id="main-icon"><span class="icon">1.1.0</span>
+        </div>
+        <button id="toggle-btn">☰</button>    
+        <button id="theme-btn">O</button>
+        <a href="/index.html"><span class="icon">H</span><span class="sidebar-text">Home</span></a>
+        <a href="/pages/about.html"><span class="icon">A</span><span class="sidebar-text">About</span></a>
+        <a href="/pages/post.html"><span class="icon">P</span><span class="sidebar-text">Post</span></a>
+        <a href="/pages/projects.html"><span class="icon">P</span><span class="sidebar-text">Projects</span></a>
+        <a href="/index.html"><span class="icon">O</span><span class="sidebar-text">Other</span></a>
+    </div>
+    <div id="content" class="content">
+        <p><strong>Date:</strong> 2026-03-16</p>
+        <p><strong>Lore:</strong> 리펙토링 및 일부 기능 개선</p>
+        <p><strong>Tags:</strong> none</p>
+        <p><strong>Category:</strong> update</p>
+        <h2 class="title">
+            v 1.1.0 업데이트 
+        </h2>
+        <div class="box">
+            <h2 class="title">
+                [ 변경사항 ] : 리펙토링 
+            </h2>
+            <hr>
+             
+            <h5 class="bold">
+                <p>(metaData)</p>
+            </h5>
+            <p>- pageData라는 구조체 추가 및 정상 작동</p>
+            <p>- 버전 및 각종 정보 기본값 부여함</p>
+            <p>- pushMeta, getMeta 작성</p>
+            <h5 class="bold">
+                <p>(builder)</p>
+            </h5>
+            <p>- builder 로 만들어지는 파일 경로 구조체로 직관적으로 변경</p>
+            <p>- builder.cpp 전반적으로 리펙토링</p>
+            <p>- 캐싱 기능을 하는 hashing()이 기존 1바이트씩 읽는 get 함수를 쓰는 것이 비효율이라 판단 -> 버퍼 사용으로 개선</p>
+            <p>- makePost가 너무 많은 것을 작업한다 판단해 구조 변경 및 일부 기능 축출</p>
+            <h5 class="bold">
+                <p>(main)</p>
+            </h5>
+            <p>- 기존 선택지인 mdToHtml 와 publish post의 코드가 상당수 겹침을 인지, processing으로 묶음</p>
+            <p>- 람다를 활용해 재사용성 확보</p>
+            <p>- 기존의 스트링 입력 방식을 정수 입력 및 스위치 문으로 변경</p>
+            <p>- index.html을 제외한 나머지 모든 html을 pages 폴더에 옮김</p>
+            <p>- post 와 page 분리 처리 기능 추가</p>
+            <h5 class="bold">
+                <p>(기타)</p>
+            </h5>
+            <p>- 64mik.icon 변경</p>
+            <p>- 프로젝트 폴더의 위치 일부 변경</p>
+            <p>- 프로젝트 폴더 이름 일부 변경</p>
+            <p>- 기존에 존재하던 혹은 나중에 재사용 가능할 파일은 lib에 분리</p>
+            <p>- 캐싱 기능을 적출해 lib에 옮김</p>
+            <p>- conf 파일 내용 일부 수정 (path 등)</p>
+        </div>
+        <div class="box">
+            <h2 class="title">
+                [ 추후 수정 ] 
+            </h2>
+            <hr>
+             
+            <p>- 내부적으로 error 코드 작성방식 통일 예정 ([xxxx] error: text 방식)</p>
+            <p>- 글 목록 / 최신 글 출력</p>
+            <p>- 로그 파일</p>
+        </div>
+
+    </div>
+    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

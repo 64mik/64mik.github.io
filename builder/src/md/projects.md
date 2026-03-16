@@ -1,5 +1,10 @@
 ---
-blog_title:Projects
+title:Projects
+date:untracked
+lore:none
+tags:none
+category:main
+isPost:false
 ---
 <= box
     추후 작업한 작업물의 이미지와 간단한 설명

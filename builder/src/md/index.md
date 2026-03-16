@@ -1,5 +1,10 @@
 ---
-blog_title:Home
+title:64mik's Tech Blog
+date:untracked
+lore:none
+tags:none
+category:index
+isPost:false
 ---
 <= title
     Welcome to 64mik's Tech Blog!
@@ -13,8 +18,8 @@ blog_title:Home
     <= hr
     =>
     <= link
-        :: index.html
-        post
+        :: /pages/posts/update_0.html
+        update v1.1.0
     =>
     최신 글에 대한 설명
 =>
