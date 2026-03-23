@@ -1,6 +1,6 @@
 (function() 
     { const saved = localStorage.getItem("theme"); 
-        if (saved === "dark" || saved === null) 
-            { document.documentElement.classList.add("dark"); } 
+        if (saved === "light" || saved === null) 
+            { document.documentElement.classList.add("light"); } 
     }
 )();

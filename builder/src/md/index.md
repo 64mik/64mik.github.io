@@ -1,5 +1,5 @@
 ---
-title:64mik's Tech Blog
+title:64mik's Blog
 date:untracked
 lore:none
 tags:none
@@ -7,7 +7,7 @@ category:index
 isPost:false
 ---
 <= title
-    Welcome to 64mik's Tech Blog!
+    Welcome to 64mik's Blog!
 =>
 프로그래밍 기술 블로그입니다.
 
@@ -18,21 +18,21 @@ isPost:false
     <= hr
     =>
     <= link
-        :: /pages/posts/update_0.html
-        update v1.1.0
+        :: /pages/posts/update_1.html
+        update v1.1.1
     =>
     최신 글에 대한 설명
 =>
 
 <= box
     <= title
-        프로젝트
+        개발 일지
     =>
     <= hr
     =>
     <= link
-        :: projects.html
-        Data Storage
+        :: /pages/posts/dev_note_0.html
+        dev note
     =>
     - 데이터 관리 프로그램
 =>
