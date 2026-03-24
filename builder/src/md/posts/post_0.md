@@ -2,8 +2,7 @@
 title:블로그 테스트
 date:2025-01-04
 lore:여러 테스트를 시도하는 중
-tags:none
-category:test
+tags:test
 isPost:true
 ---
 

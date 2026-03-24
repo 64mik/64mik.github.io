@@ -2,8 +2,7 @@
 title:개발 일지 1
 date:2025-03-23
 lore:시간이 부족하다.
-tags:note
-category:post
+tags:note,test
 isPost:true
 ---
 <= box 

@@ -10,7 +10,11 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
-
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{lore}}">
+    <meta property="og:image" content="/assets/images/icon/64mik_icon1.png">
+    <meta property="og:url" content="https://64mik.github.io">
+    <meta property="og:site_name" content="64mik's blog">
 </head>
 <body>
     <div id="navbar" class="navbar">
@@ -23,13 +27,18 @@
         <a href="/pages/projects.html"><span class="icon"><img src="/assets/images/icon/projects_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Projects</span></a>
         <a href="/index.html"><span class="icon"><img src="/assets/images/icon/categories_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Categories</span></a>
     </div>
-    <div id="content" class="content">
-        <p><strong>Date:</strong> {{date}}</p>
-        <p><strong>Lore:</strong> {{lore}}</p>
-        <p><strong>Tags:</strong> {{tags}}</p>
-        <p><strong>Category:</strong> {{category}}</p>
+    <article>
+        <header>
+            <p class="subject">{{title}}</p>
+            <p class="date">{{date}}</p>
+            <span class="categories">
+                {{tags}}
+            </span>
+        </header>
+        <div class="content">
 {{content}}
-    </div>
+        </div>
+    </article>
     <script src="/assets/js/theme.js"></script>
 </body>
 </html>

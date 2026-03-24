@@ -2,8 +2,7 @@
 title:1.1.0 업데이트
 date:2026-03-16
 lore:리펙토링 및 일부 기능 개선
-tags:none
-category:update
+tags:update
 isPost:true
 ---
 

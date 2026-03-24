@@ -4,7 +4,7 @@ Caching::Caching() : Caching("cache.txt") {}
 Caching::Caching(const std::string& filePath) {
     std::ifstream infile(filePath);
     if(!infile.is_open()){
-        throw std::runtime_error("Failed to open cache file: " + filePath);
+        throw std::runtime_error("[0006] error: Failed to open cache file: " + filePath);
     }
     infile.close();
     cacheFilePath = filePath;

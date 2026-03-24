@@ -10,31 +10,39 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
-
+    <meta property="og:title" content="1.1.0 업데이트">
+    <meta property="og:description" content="리펙토링 및 일부 기능 개선">
+    <meta property="og:image" content="/assets/images/icon/64mik_icon1.png">
+    <meta property="og:url" content="https://64mik.github.io">
+    <meta property="og:site_name" content="64mik's blog">
 </head>
 <body>
     <div id="navbar" class="navbar">
         <div><img src="/assets/images/icon/64mik_icon.png" alt="64mik Icon" id="main-icon"></div>
         <button id="theme-btn">O</button>
-        <span class="icon">v1.1.1</span>
+        <span class="icon">v1.1.2</span>
         <a href="/index.html"><span class="icon"><img src="/assets/images/icon/home_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Home</span></a>
         <a href="/pages/about.html"><span class="icon"><img src="/assets/images/icon/about_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">About</span></a>
         <a href="/pages/post.html"><span class="icon"><img src="/assets/images/icon/post_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Post</span></a>
         <a href="/pages/projects.html"><span class="icon"><img src="/assets/images/icon/projects_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Projects</span></a>
         <a href="/index.html"><span class="icon"><img src="/assets/images/icon/categories_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Categories</span></a>
     </div>
-    <div id="content" class="content">
-        <p><strong>Date:</strong> 2026-03-16</p>
-        <p><strong>Lore:</strong> 리펙토링 및 일부 기능 개선</p>
-        <p><strong>Tags:</strong> none</p>
-        <p><strong>Category:</strong> update</p>
-        <h2 class="title">
+    <article>
+        <header>
+            <p class="subject">1.1.0 업데이트</p>
+            <p class="date">2026-03-16</p>
+            <span class="categories">
+                <ul class="tag"><li><a href="../pages/categories/update.html">update</a></li></ul>
+            </span>
+        </header>
+        <div class="content">
+        <h1 class="title">
             v 1.1.0 업데이트 
-        </h2>
+        </h1>
         <div class="box">
-            <h2 class="title">
+            <h1 class="title">
                 [ 변경사항 ] : 리펙토링 
-            </h2>
+            </h1>
             <hr>
              
             <h5 class="bold">
@@ -69,9 +77,9 @@
             <p>- conf 파일 내용 일부 수정 (path 등)</p>
         </div>
         <div class="box">
-            <h2 class="title">
+            <h1 class="title">
                 [ 추후 수정 ] 
-            </h2>
+            </h1>
             <hr>
              
             <p>- 내부적으로 error 코드 작성방식 통일 예정 ([xxxx] error: text 방식)</p>
@@ -79,7 +87,8 @@
             <p>- 로그 파일</p>
         </div>
 
-    </div>
+        </div>
+    </article>
     <script src="/assets/js/theme.js"></script>
 </body>
 </html>

@@ -14,18 +14,16 @@ class metaData {
                 {"date", "untracked"},
                 {"lore", "none"},
                 {"tags", "none"}, 
-                {"category", "none"},
                 {"isPost", "false"},
                 {"content", "none"},
             };
-            std::string version = "v1.1.1";
+            std::string version = "v1.1.2";
             std::string path="";
             std::string fileName="";
         };
         void pushMeta(pageData& pd);
         pageData getMeta(const std::string &fileName);
         void sortMetaVector(std::ifstream& infile, std::vector<pageData>& v);
-        
         void writeMetaToFile(const std::string& filePath);
         void readMetaFromFile(const std::string& filePath);
         

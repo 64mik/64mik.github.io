@@ -5,7 +5,7 @@
 /*public*/
 Builder::Builder() : Builder("config.conf"){}
 Builder::Builder(const std::string& configPath){
-    const std::string folders[] = {"./src/md","./staging", "./staging/posts", "../pages" ,"../pages/posts"};
+    const std::string folders[] = {"./src/md","./staging", "./staging/posts", "../pages" ,"../pages/posts", "../pages/categories"};
     for(std::string s : folders){
         std::filesystem::create_directories(s);
     }
@@ -26,7 +26,27 @@ std::pair<std::string, std::string> Builder::makePost(const std::string& mdPath,
         return {"",""};
     }
 }
+std::string Builder::tagToHtml(const std::string& tagStr){
+    std::string str = tagStr;
+    std::string result = elementToHtml("tags") + ""; //<ul class="tags">
+    size_t pos = str.find(","); //일단 찾아봐
+    if(str != "none"){  //none이면 걍 끝내
+        while(pos != std::string::npos){    //존재하면 반복
+            size_t pos = str.find(",");     //pos 갱신
+            if(pos != std::string::npos){   // ,가 존재하면 -> 테그가 2개 이상이면            
+                result += elementToHtml("tag") + str.substr(0, pos) + elementToHtml("tag",true);
+                replace(result, "{{data}}", "../pages/categories/" + str.substr(0,pos) + ".html"); //templates.conf 참조
+                str = str.substr(pos+1);
+            }
+            else break;
+        }
+    }
+    if(str !="" && str != "none")
+        result += elementToHtml("tag") + str + elementToHtml("tag",true);       //<li><a href="">str</a></li>
+        replace(result, "{{data}}", "../pages/categories/" + str + ".html"); //templates.conf 참조
+    return result + elementToHtml("tags", true);
 
+}
 /*private*/
 
 void Builder::appendHtml(std::string& content, const std::string& line, size_t depth) {
@@ -50,7 +70,7 @@ void Builder::replace(std::string& s, const std::string& key, const std::string&
     while ((pos = s.find(key)) != std::string::npos)
         s.replace(pos, key.length(), value);
 }
-std::string Builder::elementToHtml(std::string& str, bool isClosing) {
+std::string Builder::elementToHtml(const std::string& str, bool isClosing) {
     auto it = templateMap.find(str);
     if (it != templateMap.end()) {    //존재하면
         std::string s = it->second;

@@ -2,8 +2,7 @@
 title:1.1.1 업데이트
 date:2026-03-23
 lore:디자인 변경
-tags:none
-category:update
+tags:update
 isPost:true
 ---
 

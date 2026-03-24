@@ -2,8 +2,10 @@
 #include "./lib/h/caching.h"
 #include "./lib/h/fileHandler.h"
 #include "./lib/h/metaData.h"
+#include "./lib/h/algorithm.h"
 #include <iostream>
 #include <functional>
+#include <random>
 struct folderPath {
     std::string source_dir;
     std::string page_dir;
@@ -45,7 +47,7 @@ void processing(const folderPath& folder,const std::string& extension, Caching& 
 
 
 int main() {
-    Caching cache;
+    Caching cache("cache.txt");
     Builder b;
     FileHandler f;
     metaData md;
@@ -85,6 +87,7 @@ int main() {
                             pd.meta[fr.first] = fr.second;
                         }
                     }
+                    pd.meta["tags"]=b.tagToHtml(pd.meta["tags"]);
                     for(auto it : pd.meta){
                         b.replace(fr.second, b.getConfig("del_start")+it.first+b.getConfig("del_end"), it.second);
                     }
