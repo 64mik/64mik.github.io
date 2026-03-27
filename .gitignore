@@ -1,0 +1,5 @@
+/.vscode
+/builder/staging/*
+/builder/lib/temp/*
+*.exe
+*.txt

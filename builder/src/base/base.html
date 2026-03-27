@@ -4,14 +4,14 @@
     <script src="/assets/js/init.js"></script>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>64mik's Blog</title>
+    <title>{{title}}</title>
 
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
-    <meta property="og:title" content="64mik's Blog">
-    <meta property="og:description" content="none">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{lore}}">
     <meta property="og:image" content="/assets/images/icon/64mik_icon1.png">
     <meta property="og:url" content="https://64mik.github.io">
     <meta property="og:site_name" content="64mik's blog">
@@ -20,7 +20,7 @@
     <div id="navbar" class="navbar">
         <div><img src="/assets/images/icon/64mik_icon.png" alt="64mik Icon" id="main-icon"></div>
         <button id="theme-btn">O</button>
-        <span class="icon">v1.1.2</span>
+        <span class="icon">{{version}}</span>
         <a href="/index.html"><span class="icon"><img src="/assets/images/icon/home_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Home</span></a>
         <a href="/pages/about.html"><span class="icon"><img src="/assets/images/icon/about_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">About</span></a>
         <a href="/pages/post.html"><span class="icon"><img src="/assets/images/icon/post_icon.png" alt="Home icon" style="width: 30px; height: 30px;"></img></span><span class="navbar-text">Post</span></a>
@@ -29,51 +29,14 @@
     </div>
     <article>
         <header>
-            <p class="subject">64mik's Blog</p>
-            <p class="date">untracked</p>
+            <p class="subject">{{title}}</p>
+            <p class="date">{{date}}</p>
             <span class="categories">
-                <ul class="tag"></ul>
+                {{tags}}
             </span>
         </header>
         <div class="content">
-        <h1 class="title">
-            Welcome to 64mik's Blog! 
-        </h1>
-        <p>프로그래밍 기술 블로그입니다.</p>
-        <div class="box">
-            <h1 class="title">
-                최신 포스트 
-            </h1>
-            <hr>
-             
-            <a class ="link" href="/pages/posts/update_1.html">
-                update v1.1.1 
-            </a>
-            <p>최신 글에 대한 설명</p>
-        </div>
-        <div class="box">
-            <h1 class="title">
-                개발 일지 
-            </h1>
-            <hr>
-             
-            <a class ="link" href="/pages/posts/dev_note_0.html">
-                dev note 
-            </a>
-            <p>- 데이터 관리 프로그램</p>
-        </div>
-        <div class="box">
-            <h1 class="title">
-                소개 
-            </h1>
-            <hr>
-             
-            <p>개인적으로 작업한 것을 올리는 정보공유 블로그 입니다.</p>
-            <a class ="link" href="projects.html">
-                더 알아보기 
-            </a>
-        </div>
-
+{{content}}
         </div>
     </article>
     <script src="/assets/js/theme.js"></script>
