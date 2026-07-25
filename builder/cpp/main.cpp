@@ -1,19 +1,32 @@
-#include "./include/builder.h"
-#include "./lib/h/caching.h"
-#include "./lib/h/fileHandler.h"
-#include "./lib/h/metaData.h"
-#include "./lib/h/algorithm.h"
+#include "builder.h"
+#include "mlog.h"
+//#include "caching.h"
+//#include "fileHandler.h"
+//#include "metaData.h"
 #include <iostream>
 #include <functional>
 #include <random>
+#include <chrono>
+
+int main(){
+    std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+    Builder b;
+    //makePost를 템플릿 관련 이름으로 바꿔야할듯. 기능이 그 쪽에 더 가까우니
+    //b.makePost("src/md","staging");  //md가 담긴 폴더 + html이 담길 폴더 설정
+    //캐싱이나 메타데이터는 전부 빌더 안으로 넣기
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << "Execution Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms" << std::endl;
+    return 0;
+}
+
+/*
 struct folderPath {
     std::string source_dir;
     std::string page_dir;
     std::string post_dir;
 };
-const folderPath mdPaths = {".\\src\\md", ".\\staging", ".\\staging\\posts"};
-const folderPath stagingPaths = {".\\staging", "..\\pages" ,"..\\pages\\posts"};
-
+const folderPath mdPaths = {".\\src\\md", ".\\staging", ".\\staging\\posts"};   //각 폴더 경로를 설정 파일에서 불러오는 것으로 수정 예정
+const folderPath stagingPaths = {".\\staging", "..\\pages" ,"..\\pages\\posts"};    //이런 주소 없으면 그냥 다 현 디렉토리에 생성하는 방식으로 예외처리 필요
 void processing(const folderPath& folder,const std::string& extension, Caching& cache, metaData& md, std::function<std::pair<metaData::pageData, std::string>(const std::filesystem::path&)> contentFunc) {
     uint64_t hash;
     for (const auto& entry : std::filesystem::recursive_directory_iterator(folder.source_dir)) {
@@ -34,7 +47,7 @@ void processing(const folderPath& folder,const std::string& extension, Caching& 
             std::cout << "Output Path: " + outPath.string() + "\n";
             std::ofstream outFile(outPath, std::ios::trunc);
             if(!outFile.is_open()){
-                std::cerr << "Error: Could not open file for writing: " + outPath.string() + "\n";
+                MLOG_ERROR_S << "Error: Could not open file for writing: " + outPath.string() + "\n";
                 continue;
             }
             outFile << content;
@@ -47,8 +60,8 @@ void processing(const folderPath& folder,const std::string& extension, Caching& 
 
 
 int main() {
-    Caching cache("cache.txt");
     Builder b;
+    Caching cache("cache.txt");
     FileHandler f;
     metaData md;
     metaData::pageData pd;
@@ -63,14 +76,14 @@ int main() {
             std::cout << "- " + n + "\n";
         }
         if(!std::getline(std::cin, input)){
-            std::cout << "Error reading input. Please try again.\n";
+            MLOG_ERROR_S << "Error reading input. Please try again.\n";
             continue;
         }
         try{
             selection = std::stoi(input);
         } 
         catch(const std::exception& e){
-            std::cout << "Invalid input. Please enter a number.\n";
+            MLOG_ERROR_S << "Invalid input. Please enter a number.";
             continue;
         }          
         switch (selection){
@@ -93,7 +106,7 @@ int main() {
                     }
                     return std::make_pair(pd, fr.second);
                 });
-                std::cout << "Finished processing markdown files.\n";
+                MLOG_INFO_S << "Finished processing markdown files.";
                 break;
             }
             case 2:{
@@ -101,19 +114,22 @@ int main() {
                     std::string content = f.loadFile(path.string());
                     return std::make_pair(md.getMeta(path.stem().string()), content);
                 });
-                std::cout << "Finished publishing posts.\n";
+                MLOG_INFO_S << "Finished publishing posts.";
                 break;
             }
             case 3:
                 cache.clearCache();
-                std::cout << "Cache cleared.\n";
+                MLOG_INFO_S << "Cache cleared.";
                 break;
             case 4:
+                MLOG_INFO_S << "exit.";
                 return 0;
             default:
-                std::cout << "\nUnknown command: " + input + "\n";
+                MLOG_WARNING_S << "Unknown command: " + input;
                 continue;
         }
   }
     return 0;
 }
+
+*/

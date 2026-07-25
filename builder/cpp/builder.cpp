@@ -1,7 +1,6 @@
 #include "builder.h"
 #include "mlog.h"
-#include "loggerFactory.h"
-#include "logger.h"
+#include "logger_factory.h"
 //done
 /*public*/
 void setLogger(){
@@ -19,8 +18,8 @@ Builder::~Builder() {}
 std::pair<std::string, std::string> Builder::makePost(const std::string& mdFolder, const std::string& htmlFolder){
     try{
         auto fr = parseFrontMarker(mdFolder);
-    std::string result = base;
-    replace(result, getConfig("del_start") + "content" + getConfig("del_end"), mdToHtml(fr.second));
+    std::string result = base_;
+    //replace(result, getConfig("del_start") + "content" + getConfig("del_end"), mdToHtml(fr.second));
     return std::make_pair(fr.first, result);
     }
     catch(const std::exception& e){
